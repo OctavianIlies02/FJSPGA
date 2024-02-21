@@ -11,14 +11,21 @@ public class Job {
     @Column
     private String name;
     @Column
-    private String description;
+    private int arrivalTime;
+    @Column
+    private Machine list;
+    @Column
+    private int n = 1;
+    @Column
+    private Operation op;
+
 
     public Job(){}
 
-    public Job(long id, String name, String description){
+    public Job(long id, String name){
         this.id = id;
         this.name = name;
-        this.description = description;
+
     }
 
     public Long getId() {
@@ -37,12 +44,5 @@ public class Job {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
 }
