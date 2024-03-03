@@ -14,7 +14,7 @@ import java.util.List;
 public class JobController {
 
     @Autowired
-    private  JobService jobService = new JobService();
+    private  JobService jobService;
 
     @PostMapping
     public ResponseEntity<?> createJob(@RequestBody Job job) {
