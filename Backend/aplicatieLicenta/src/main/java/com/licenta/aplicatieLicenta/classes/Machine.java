@@ -2,6 +2,7 @@ package com.licenta.aplicatieLicenta.classes;
 
 import jakarta.persistence.*;
 
+@Table(name = "machines")
 @Entity
 public class Machine {
     @Id
@@ -12,11 +13,11 @@ public class Machine {
     @Column
     private int mentenance;
     @Column
-    private int standardPower;
+    private String standardPower;
 
     public Machine(){}
 
-    public Machine(long id, int breakdownTime, int mentenance, int standardPower){
+    public Machine(long id, int breakdownTime, int mentenance, String standardPower){
         this.id = id;
         this.breakdownTime = breakdownTime;
         this.mentenance = mentenance;
@@ -47,11 +48,11 @@ public class Machine {
         this.mentenance = mentenance;
     }
 
-    public int getStandardPower() {
+    public String getStandardPower() {
         return standardPower;
     }
 
-    public void setStandardPower(int standardPower) {
+    public void setStandardPower(String standardPower) {
         this.standardPower = standardPower;
     }
 }

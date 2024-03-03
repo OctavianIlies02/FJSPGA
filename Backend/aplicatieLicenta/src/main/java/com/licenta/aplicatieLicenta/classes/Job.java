@@ -1,6 +1,12 @@
 package com.licenta.aplicatieLicenta.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.List;
 
 @Table(name = "jobs")
 @Entity
@@ -9,23 +15,30 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String name;
-    @Column
     private int arrivalTime;
-    @Column
-    private Machine list;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "machine_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @Nullable
+    private List<Machine> machines;
     @Column
     private int n = 1;
-    @Column
-    private Operation op;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "operation_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @Nullable
+    private Operation operation;
 
 
     public Job(){}
 
-    public Job(long id, String name){
+    public Job(long id, int arrivalTime, List<Machine> machines, Operation operation){
         this.id = id;
-        this.name = name;
-
+        this.arrivalTime = arrivalTime;
+        this.machines = machines;
+        this.operation = operation;
     }
 
     public Long getId() {
@@ -36,13 +49,30 @@ public class Job {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+
+    public int getArrivalTime() {
+        return arrivalTime;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setArrivalTime(int arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
+    @Nullable
+    public List<Machine> getMachines() {
+        return machines;
+    }
 
+    public void setMachines(@Nullable List<Machine> machines) {
+        this.machines = machines;
+    }
+
+    @Nullable
+    public Operation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(@Nullable Operation operation) {
+        this.operation = operation;
+    }
 }

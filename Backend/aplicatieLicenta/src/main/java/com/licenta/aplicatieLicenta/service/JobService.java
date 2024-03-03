@@ -6,21 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobService {
-    private final JobRepository jobRepository;
 
     @Autowired
-    public JobService(JobRepository jobRepository) {
-        this.jobRepository = jobRepository;
+    private JobRepository jobRepository;
+
+    public Job createJob(Job job) {
+        jobRepository.save(job);
+        return job;
     }
 
     public List<Job> getAllJobs() {
         return jobRepository.findAll();
     }
 
-    public Job saveJob(Job job) {
-        return jobRepository.save(job);
+    public Optional<Job> getJobById (long id) {
+        return jobRepository.findById(id);
     }
 }

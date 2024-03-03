@@ -12,22 +12,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/jobs")
 public class JobController {
-    private final JobService jobService;
 
     @Autowired
-    public JobController(JobService jobService) {
-        this.jobService = jobService;
+    private  JobService jobService = new JobService();
+
+    @PostMapping
+    public ResponseEntity<?> createJob(@RequestBody Job job) {
+        try {
+            Job createdJob = jobService.createJob(job);
+            return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping
     public ResponseEntity<List<Job>> getAllJobs() {
         List<Job> jobs = jobService.getAllJobs();
         return new ResponseEntity<>(jobs, HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<Job> createJob(@RequestBody Job job) {
-        Job savedJob = jobService.saveJob(job);
-        return new ResponseEntity<>(savedJob, HttpStatus.CREATED);
     }
 }
