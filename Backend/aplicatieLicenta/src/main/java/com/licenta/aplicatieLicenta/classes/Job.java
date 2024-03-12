@@ -16,6 +16,9 @@ public class Job {
     private Long id;
     @Column
     private int arrivalTime;
+    @ElementCollection
+    @Column
+    private List<String> tasks;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -30,15 +33,19 @@ public class Job {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @Nullable
     private Operation operation;
+    @Column
+    private double fitness;
 
 
     public Job(){}
 
-    public Job(long id, int arrivalTime, List<Machine> machines, Operation operation){
+    public Job(long id, int arrivalTime, List<Machine> machines, Operation operation, List<String> tasks, double fitness){
         this.id = id;
         this.arrivalTime = arrivalTime;
         this.machines = machines;
         this.operation = operation;
+        this.tasks = tasks;
+        this.fitness = fitness;
     }
 
     public Long getId() {
@@ -74,5 +81,21 @@ public class Job {
 
     public void setOperation(@Nullable Operation operation) {
         this.operation = operation;
+    }
+
+    public List<String> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<String> tasks) {
+        this.tasks = tasks;
+    }
+
+    public double getFitness() {
+        return fitness;
+    }
+
+    public void setFitness(double fitness) {
+        this.fitness = fitness;
     }
 }

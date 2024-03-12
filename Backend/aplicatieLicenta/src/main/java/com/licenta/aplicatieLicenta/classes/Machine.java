@@ -14,14 +14,17 @@ public class Machine {
     private int mentenance;
     @Column
     private String standardPower;
+    @Column
+    private int speed;
 
     public Machine(){}
 
-    public Machine(long id, int breakdownTime, int mentenance, String standardPower){
+    public Machine(long id, int breakdownTime, int mentenance, String standardPower, int speed){
         this.id = id;
         this.breakdownTime = breakdownTime;
         this.mentenance = mentenance;
         this.standardPower = standardPower;
+        this.speed = speed;
     }
 
     public Long getId() {
@@ -54,5 +57,13 @@ public class Machine {
 
     public void setStandardPower(String standardPower) {
         this.standardPower = standardPower;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }
