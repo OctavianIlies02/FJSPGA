@@ -16,9 +16,8 @@ public class Job {
     private Long id;
     @Column
     private int arrivalTime;
-    @ElementCollection
-    @Column
-    private List<String> tasks;
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -39,7 +38,7 @@ public class Job {
 
     public Job(){}
 
-    public Job(long id, int arrivalTime, List<Machine> machines, Operation operation, List<String> tasks, double fitness){
+    public Job(long id, int arrivalTime, List<Machine> machines, Operation operation, List<Task> tasks, double fitness){
         this.id = id;
         this.arrivalTime = arrivalTime;
         this.machines = machines;
@@ -83,11 +82,11 @@ public class Job {
         this.operation = operation;
     }
 
-    public List<String> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<String> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 

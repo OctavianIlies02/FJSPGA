@@ -2,6 +2,7 @@ package com.licenta.aplicatieLicenta.service;
 
 import com.licenta.aplicatieLicenta.classes.Job;
 import com.licenta.aplicatieLicenta.classes.Machine;
+import com.licenta.aplicatieLicenta.classes.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,16 @@ public class ProductionSchedulerService {
     @Autowired
     private JobService jobService;
 
+    @Autowired
+    private TaskService taskService;
+
 
     public void runProductionScheduler(int nJobs, int nTasks, double lambda) {
         int genSize = nJobs * nTasks;
         List<Job> population = new ArrayList<>();
         List<Job> tempPopulation = new ArrayList<>();
+        int currentIteration = 0;
+        int maxIterations = 100;
 
         if (lambda < 0.6) {
             initialPopulation(genSize, 1, population);
@@ -34,7 +40,7 @@ public class ProductionSchedulerService {
         evaluateFitness(population);
 
 
-        while (!stoppingCriterionFulfilled()) {
+        while (!stoppingCriterionFulfilled(currentIteration, maxIterations)) {
             randomShuffle(population);
 
             for (int i = 0; i < population.size(); i += 2) {
@@ -50,7 +56,7 @@ public class ProductionSchedulerService {
             }
 
             updatePopulation(population, tempPopulation);
-
+            currentIteration++;
 
         }
 
@@ -81,13 +87,15 @@ public class ProductionSchedulerService {
 
     private void initialPopulation(int genSize, int speed, List<Job> population) {
         List<Job> jobs = jobService.getAllJobs();
+        List<Task> tasks = taskService.getAllTasks(); // Obținem toate sarcinile din baza de date
 
         // Sortează job-urile în funcție de reguli de dispatching
         sortJobsByDispatchingRule(jobs, DispatchingRule.JML);
 
-
         for (int i = 0; i < genSize; i++) {
-            population.add(jobs.get(i % jobs.size()));
+            Job job = jobs.get(i % jobs.size());
+            job.setTasks(tasks); // Setează lista de sarcini pentru fiecare job
+            population.add(job);
         }
 
         for (Job schedule : population) {
@@ -106,10 +114,10 @@ public class ProductionSchedulerService {
                 jobs.sort(Comparator.comparingInt(job -> -job.getTasks().size())); // Sortare descrescătoare după numărul de sarcini
                 break;
             case SPT:
-                jobs.sort(Comparator.comparingInt(job -> -job.getTasks().size())); // Sortare descrescătoare după numărul de sarcini
+                jobs.sort(Comparator.comparingInt(job -> -job.getArrivalTime())); // Sortare descrescătoare după timpul de sosire
                 break;
             case LPT:
-                jobs.sort(Comparator.comparingInt(job -> -job.getTasks().size())); // Sortare descrescătoare după numărul de sarcini
+                jobs.sort(Comparator.comparingInt(job -> job.getArrivalTime())); // Sortare crescătoare după timpul de sosire
                 break;
             case MML:
                 jobs.sort(Comparator.comparingInt(job -> -job.getMachines().size())); // Sortare descrescătoare după numărul de mașini
@@ -167,8 +175,8 @@ public class ProductionSchedulerService {
         int chromosomeLength = brother.getMachines().size(); // Lungimea cromozomului
 
         // Selectează un subset aleatoriu de sarcini (job, energy) din primul părinte
-        int subsetStart = getRandomIndex(chromosomeLength);
-        int subsetEnd = getRandomIndex(chromosomeLength);
+        int subsetStart = getRandomIndex(chromosomeLength - 1); // Scade 1 pentru a evita generarea unui index egal cu lungimea cromozomului
+        int subsetEnd = getRandomIndex(chromosomeLength - 1); // Scade 1 pentru a evita generarea unui index egal cu lungimea cromozomului
 
         // Asigură că subsetEnd este mai mare decât subsetStart
         if (subsetEnd < subsetStart) {
@@ -190,9 +198,10 @@ public class ProductionSchedulerService {
         }
     }
 
+
+
     private int getRandomIndex(int max) {
-        Random random = new Random();
-        return random.nextInt(max);
+        return 0;
     }
 
 
@@ -252,6 +261,7 @@ public class ProductionSchedulerService {
         tempPopulation.add(sister);
     }
 
+
     private void updatePopulation(List<Job> population, List<Job> tempPopulation) {
         population.clear();
         population.addAll(tempPopulation);
@@ -261,9 +271,9 @@ public class ProductionSchedulerService {
         return Collections.max(population, Comparator.comparing(Job::getArrivalTime));
     }
 
-    private boolean stoppingCriterionFulfilled() {
-
-        return false;
+    private boolean stoppingCriterionFulfilled(int currentIteration, int maxIterations) {
+        return currentIteration >= maxIterations;
     }
+
 }
 
