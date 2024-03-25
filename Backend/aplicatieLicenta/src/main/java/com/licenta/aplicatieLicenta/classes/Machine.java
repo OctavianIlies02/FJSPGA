@@ -16,15 +16,18 @@ public class Machine {
     private String standardPower;
     @Column
     private int speed;
+    @Column
+    private int energyConsumption;
 
     public Machine(){}
 
-    public Machine(long id, int breakdownTime, int mentenance, String standardPower, int speed){
+    public Machine(long id, int breakdownTime, int mentenance, String standardPower, int speed, int energyConsumption){
         this.id = id;
         this.breakdownTime = breakdownTime;
         this.mentenance = mentenance;
         this.standardPower = standardPower;
         this.speed = speed;
+        this.energyConsumption = energyConsumption;
     }
 
     public Long getId() {
@@ -65,5 +68,13 @@ public class Machine {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public int getEnergyConsumption() {
+        return energyConsumption;
+    }
+
+    public void setEnergyConsumption(int energyConsumption) {
+        this.energyConsumption = energyConsumption;
     }
 }

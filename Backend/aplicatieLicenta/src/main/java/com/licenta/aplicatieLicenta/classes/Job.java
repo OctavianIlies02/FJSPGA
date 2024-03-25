@@ -47,6 +47,12 @@ public class Job {
         this.fitness = fitness;
     }
 
+    @Override
+    public String toString() {
+        return "Job: id=" + id + ", arrivalTime=" + arrivalTime ;
+    }
+
+
     public Long getId() {
         return id;
     }

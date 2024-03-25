@@ -21,8 +21,7 @@ public class ProductionSchedulerController {
 
         productionSchedulerService.runProductionScheduler(nJobs, nTasks, lambda);
 
-        // Întoarce un obiect Job (sau ce tip este folosit pentru rezultatul dorit)
-        // Momentan, returnăm null, dar trebuie să ajustezi acest lucru în funcție de nevoile tale
+
         return null;
     }
 
@@ -32,7 +31,6 @@ public class ProductionSchedulerController {
         private int numberOfTasks;
         private double lambda;
 
-        // Getteri și setteri
 
         public int getNumberOfJobs() {
             return numberOfJobs;

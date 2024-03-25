@@ -25,7 +25,7 @@ public class ProductionSchedulerService {
         List<Job> population = new ArrayList<>();
         List<Job> tempPopulation = new ArrayList<>();
         int currentIteration = 0;
-        int maxIterations = 100;
+        int maxIterations = 2;
 
         if (lambda < 0.6) {
             initialPopulation(genSize, 1, population);
@@ -164,11 +164,25 @@ public class ProductionSchedulerService {
     }
 
     private double calculateMakespan(Job schedule) {
-        return 1.0;
+        double makespan = 0.0;
+        List<Task> tasks = schedule.getTasks();
+        for(Task task: tasks){
+            int taskFinishTime = task.getFinishTime();
+            if(taskFinishTime > makespan){
+                makespan= taskFinishTime;
+            }
+        }
+        return makespan;
     }
 
     private double calculateEnergy(Job schedule) {
-        return 1.0;
+        double energy = 0.0;
+        List<Task> tasks = schedule.getTasks();
+        for(Task task : tasks){
+            if(task.getMachineRequirement() != null){
+            energy += task.getMachineRequirement().getEnergyConsumption();}
+        }
+        return energy;
     }
 
     private void crossover(Job brother, Job sister) {
@@ -201,7 +215,8 @@ public class ProductionSchedulerService {
 
 
     private int getRandomIndex(int max) {
-        return 0;
+        Random random = new Random();
+        return random.nextInt(max);
     }
 
 

@@ -18,12 +18,22 @@ public class Task {
     @Column
     private String taskName;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "machine_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Machine machineRequirement;
+
+    @Column
+    private int finishTime;
+
     public Task() {
     }
 
-    public Task(Job job, String taskName) {
+    public Task(Job job, String taskName, Machine machineRequirement, int finishTime) {
         this.job = job;
         this.taskName = taskName;
+        this.machineRequirement = machineRequirement;
+        this.finishTime = finishTime;
     }
 
     public Long getId() {
@@ -48,5 +58,21 @@ public class Task {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public Machine getMachineRequirement() {
+        return machineRequirement;
+    }
+
+    public void setMachineRequirement(Machine machineRequirement) {
+        this.machineRequirement = machineRequirement;
+    }
+
+    public int getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(int finishTime) {
+        this.finishTime = finishTime;
     }
 }
