@@ -25,7 +25,7 @@ public class ProductionSchedulerService {
         List<Job> population = new ArrayList<>();
         List<Job> tempPopulation = new ArrayList<>();
         int currentIteration = 0;
-        int maxIterations = 2;
+        int maxIterations = 3;
 
         if (lambda < 0.6) {
             initialPopulation(genSize, 1, population);
@@ -50,7 +50,7 @@ public class ProductionSchedulerService {
                 crossover(brother, sister);
                 mutation(brother, sister);
 
-                evaluateFitness2(brother, sister);
+                evaluateFitness(brother, sister);
 
                 saveTempPopulation(brother, sister,tempPopulation);
             }
@@ -62,23 +62,6 @@ public class ProductionSchedulerService {
 
         Job bestSchedule = findBestSchedule(population);
         System.out.println("Best Schedule: " + bestSchedule);
-    }
-
-    private void evaluateFitness2(Job brother, Job sister) {
-        double maxMakespan = getMaxMakespan();
-        double maxEnergy = getMaxEnergy();
-
-        double normMakespanBrother = calculateMakespan(brother) / maxMakespan;
-        double normEnergyBrother = calculateEnergy(brother) / maxEnergy;
-
-        double fitnessBrother = (lambda * normMakespanBrother) + ((1 - lambda) * normEnergyBrother);
-        brother.setFitness(fitnessBrother);
-
-        double normMakespanSister = calculateMakespan(sister) / maxMakespan;
-        double normEnergySister = calculateEnergy(sister) / maxEnergy;
-
-        double fitnessSister = (lambda * normMakespanSister) + ((1 - lambda) * normEnergySister);
-        sister.setFitness(fitnessSister);
     }
 
     private void randomShuffle(List<Job> population) {
@@ -142,48 +125,7 @@ public class ProductionSchedulerService {
         return random.nextInt((max - min) + 1) + min;
     }
 
-    private void evaluateFitness(List<Job> population) {
-        double maxMakespan = getMaxMakespan();
-        double maxEnergy = getMaxEnergy();
 
-        for (Job schedule : population) {
-            double normMakespan = calculateMakespan(schedule) / maxMakespan;
-            double normEnergy = calculateEnergy(schedule) / maxEnergy;
-
-            double fitness = (lambda * normMakespan) + ((1 - lambda) * normEnergy);
-            schedule.setFitness(fitness);
-        }
-    }
-
-    private double getMaxMakespan() {
-        return 1.0;
-    }
-
-    private double getMaxEnergy() {
-        return 1.0;
-    }
-
-    private double calculateMakespan(Job schedule) {
-        double makespan = 0.0;
-        List<Task> tasks = schedule.getTasks();
-        for(Task task: tasks){
-            int taskFinishTime = task.getFinishTime();
-            if(taskFinishTime > makespan){
-                makespan= taskFinishTime;
-            }
-        }
-        return makespan;
-    }
-
-    private double calculateEnergy(Job schedule) {
-        double energy = 0.0;
-        List<Task> tasks = schedule.getTasks();
-        for(Task task : tasks){
-            if(task.getMachineRequirement() != null){
-            energy += task.getMachineRequirement().getEnergyConsumption();}
-        }
-        return energy;
-    }
 
     private void crossover(Job brother, Job sister) {
         int chromosomeLength = brother.getMachines().size(); // Lungimea cromozomului
@@ -221,9 +163,10 @@ public class ProductionSchedulerService {
 
 
 
+
     private void mutation(Job brother, Job sister) {
         double mutationProbability = 0.1; // Setează probabilitatea de mutație (10% în acest exemplu)
-        int chromosomeLength = brother.getMachines().size(); // Lungimea cromozomului
+        int chromosomeLength = brother.getMachines().size() ; // Lungimea cromozomului
 
         // Verifică dacă se aplică mutația pentru frate
         if (Math.random() < mutationProbability) {

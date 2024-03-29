@@ -3,6 +3,8 @@ package com.licenta.aplicatieLicenta.classes;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tasks")
 public class Task {
@@ -23,6 +25,10 @@ public class Task {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Machine machineRequirement;
 
+    @// TODO: 3/29/2024 lista de perechi energie si timp de procesare
+
+    private List<EnergyProcessingTime> energyProcessingTimeList;
+        
     @Column
     private int finishTime;
 
@@ -74,5 +80,9 @@ public class Task {
 
     public void setFinishTime(int finishTime) {
         this.finishTime = finishTime;
+    }
+
+    public List<EnergyProcessingTime> getEnergyProcessingTimeList(){
+        return energyProcessingTimeList;
     }
 }

@@ -18,8 +18,8 @@ public class Job {
     private int arrivalTime;
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "machine_id")
+    /*@OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @Nullable
@@ -33,7 +33,7 @@ public class Job {
     @Nullable
     private Operation operation;
     @Column
-    private double fitness;
+    private double fitness; */
 
 
     public Job(){}

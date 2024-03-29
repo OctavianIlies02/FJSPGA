@@ -16,11 +16,17 @@ public class Planification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "operation_id")
+    @JoinColumn(name = "job_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @Nullable
-    private List<Operation> operations;
+    private List<Job> jobs;
+
+
+    private int fitness;
+
+
+
 
     public Planification(){}
 
@@ -44,5 +50,17 @@ public class Planification {
 
     public void setOperations(@Nullable List<Operation> operations) {
         this.operations = operations;
+    }
+
+    public int getNuberOfOperations(){
+        int nr =0;
+        for(Job job : jobs){
+            nr += job.getTasks().size();
+        }
+        return nr;
+    }
+
+    public List<Job> getJobs(){
+        return jobs;
     }
 }
