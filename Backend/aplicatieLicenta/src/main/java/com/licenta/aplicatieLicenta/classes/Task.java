@@ -1,8 +1,10 @@
 package com.licenta.aplicatieLicenta.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,20 +15,18 @@ public class Task {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     private Job job;
-
-    @Column
-    private String taskName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Machine machineRequirement;
 
-    @// TODO: 3/29/2024 lista de perechi energie si timp de procesare
-
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn( name = "task_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<EnergyProcessingTime> energyProcessingTimeList;
         
     @Column
@@ -35,11 +35,11 @@ public class Task {
     public Task() {
     }
 
-    public Task(Job job, String taskName, Machine machineRequirement, int finishTime) {
+    public Task(Job job, Machine machineRequirement, int finishTime) {
         this.job = job;
-        this.taskName = taskName;
         this.machineRequirement = machineRequirement;
         this.finishTime = finishTime;
+        this.energyProcessingTimeList = new ArrayList<>();
     }
 
     public Long getId() {
@@ -56,14 +56,6 @@ public class Task {
 
     public void setJob(Job job) {
         this.job = job;
-    }
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
     }
 
     public Machine getMachineRequirement() {
@@ -85,4 +77,9 @@ public class Task {
     public List<EnergyProcessingTime> getEnergyProcessingTimeList(){
         return energyProcessingTimeList;
     }
+
+    public void setEnergyProcessingTimeList(List<EnergyProcessingTime> energyProcessingTimeList) {
+        this.energyProcessingTimeList = energyProcessingTimeList;
+    }
+
 }

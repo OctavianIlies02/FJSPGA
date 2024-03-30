@@ -1,8 +1,6 @@
 package com.licenta.aplicatieLicenta.controllers;
 
-import com.licenta.aplicatieLicenta.classes.Operation;
 import com.licenta.aplicatieLicenta.classes.Planification;
-import com.licenta.aplicatieLicenta.service.OperationService;
 import com.licenta.aplicatieLicenta.service.PlanificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

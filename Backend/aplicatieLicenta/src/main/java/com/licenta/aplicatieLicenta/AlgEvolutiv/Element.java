@@ -22,7 +22,7 @@ public class Element {
         Random random = new Random();
         for(Job job : planification.getJobs()){
             for(Task task : job.getTasks()) {
-                nr = task.getEnergyProcessingTimeList();
+                nr = task.getEnergyProcessingTimeList().size();
                 auxElement.add(job.getId());
                 auxElement.add(random.nextInt(nr));
             }
@@ -73,7 +73,15 @@ public class Element {
        for(Job job : planification.getJobs()){
            for(Task task : job.getTasks()){
                List<EnergyProcessingTime> list = new ArrayList<>(task.getEnergyProcessingTimeList());
-             list.sort((EnergyProcessingTime e1, EnergyProcessingTime e2)-> e1.getEnergy() < e2.getEnergy());
+               list.sort((EnergyProcessingTime e1, EnergyProcessingTime e2) -> {
+                   if (e1.getEnergy() < e2.getEnergy()) {
+                       return -1;
+                   } else if (e1.getEnergy() > e2.getEnergy()) {
+                       return 1;
+                   } else {
+                       return 0;
+                   }
+               });
              makespan += list.get(0).getProcessingTime();
            }
        }
@@ -85,7 +93,15 @@ public class Element {
         for(Job job : planification.getJobs()){
             for(Task task : job.getTasks()){
                 List<EnergyProcessingTime> list = new ArrayList<>(task.getEnergyProcessingTimeList());
-                list.sort((EnergyProcessingTime e1, EnergyProcessingTime e2)-> e1.getProcessingTime() < e2.getProcessingTime());
+                list.sort((EnergyProcessingTime e1, EnergyProcessingTime e2)-> {
+                    if(e1.getProcessingTime() < e2.getProcessingTime()) {
+                        return  -1;
+                    }else if(e1.getProcessingTime() > e2.getProcessingTime()){
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
                 energy += list.get(0).getEnergy();
             }
         }

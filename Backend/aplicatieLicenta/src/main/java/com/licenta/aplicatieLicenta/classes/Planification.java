@@ -15,6 +15,7 @@ public class Planification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -22,17 +23,15 @@ public class Planification {
     @Nullable
     private List<Job> jobs;
 
-
+    @Column
     private int fitness;
-
-
 
 
     public Planification(){}
 
-    public Planification(Long id, List<Operation> operations){
+    public Planification(Long id, int fintess){
         this.id = id;
-        this.operations = operations;
+        this.fitness = fintess;
     }
 
     public Long getId() {
@@ -41,15 +40,6 @@ public class Planification {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Nullable
-    public List<Operation> getOperations() {
-        return operations;
-    }
-
-    public void setOperations(@Nullable List<Operation> operations) {
-        this.operations = operations;
     }
 
     public int getNuberOfOperations(){
@@ -62,5 +52,13 @@ public class Planification {
 
     public List<Job> getJobs(){
         return jobs;
+    }
+
+    public int getFitness() {
+        return fitness;
+    }
+
+    public void setFitness(int fitness) {
+        this.fitness = fitness;
     }
 }

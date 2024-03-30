@@ -19,7 +19,7 @@ public class ProductionSchedulerController {
         int nTasks = inputData.getNumberOfTasks();
         double lambda = inputData.getLambda();
 
-        productionSchedulerService.runProductionScheduler(nJobs, nTasks, lambda);
+        //productionSchedulerService.runProductionScheduler(nJobs, nTasks, lambda);
 
 
         return null;

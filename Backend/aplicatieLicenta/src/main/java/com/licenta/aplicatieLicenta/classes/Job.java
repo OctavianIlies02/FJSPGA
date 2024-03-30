@@ -1,10 +1,6 @@
 package com.licenta.aplicatieLicenta.classes;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -13,11 +9,13 @@ import java.util.List;
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column
     private int arrivalTime;
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
+
+
     /*@OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -38,13 +36,10 @@ public class Job {
 
     public Job(){}
 
-    public Job(long id, int arrivalTime, List<Machine> machines, Operation operation, List<Task> tasks, double fitness){
+    public Job(int id, int arrivalTime, List<Task> tasks){
         this.id = id;
         this.arrivalTime = arrivalTime;
-        this.machines = machines;
-        this.operation = operation;
         this.tasks = tasks;
-        this.fitness = fitness;
     }
 
     @Override
@@ -53,11 +48,11 @@ public class Job {
     }
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -70,24 +65,6 @@ public class Job {
         this.arrivalTime = arrivalTime;
     }
 
-    @Nullable
-    public List<Machine> getMachines() {
-        return machines;
-    }
-
-    public void setMachines(@Nullable List<Machine> machines) {
-        this.machines = machines;
-    }
-
-    @Nullable
-    public Operation getOperation() {
-        return operation;
-    }
-
-    public void setOperation(@Nullable Operation operation) {
-        this.operation = operation;
-    }
-
     public List<Task> getTasks() {
         return tasks;
     }
@@ -96,11 +73,4 @@ public class Job {
         this.tasks = tasks;
     }
 
-    public double getFitness() {
-        return fitness;
-    }
-
-    public void setFitness(double fitness) {
-        this.fitness = fitness;
-    }
 }

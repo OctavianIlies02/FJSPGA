@@ -20,7 +20,7 @@ public class ProductionSchedulerService {
     private TaskService taskService;
 
 
-    public void runProductionScheduler(int nJobs, int nTasks, double lambda) {
+    /*public void runProductionScheduler(int nJobs, int nTasks, double lambda) {
         int genSize = nJobs * nTasks;
         List<Job> population = new ArrayList<>();
         List<Job> tempPopulation = new ArrayList<>();
@@ -37,7 +37,7 @@ public class ProductionSchedulerService {
             initialPopulation(genSize, 3, population);
         }
 
-        evaluateFitness(population);
+        //evaluateFitness(population);
 
 
         while (!stoppingCriterionFulfilled(currentIteration, maxIterations)) {
@@ -50,7 +50,7 @@ public class ProductionSchedulerService {
                 crossover(brother, sister);
                 mutation(brother, sister);
 
-                evaluateFitness(brother, sister);
+                //evaluateFitness(brother, sister);
 
                 saveTempPopulation(brother, sister,tempPopulation);
             }
@@ -231,7 +231,7 @@ public class ProductionSchedulerService {
 
     private boolean stoppingCriterionFulfilled(int currentIteration, int maxIterations) {
         return currentIteration >= maxIterations;
-    }
+    } */
 
 }
 
