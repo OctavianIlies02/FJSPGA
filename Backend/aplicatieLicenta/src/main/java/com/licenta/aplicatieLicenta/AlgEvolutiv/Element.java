@@ -107,4 +107,69 @@ public class Element {
         }
         return energy;
     }
+
+
+    private void crossover(List<Element> p1, List<Element> p2){
+        List<Element> c1 = new ArrayList<>();
+        List<Element> c2 = new ArrayList<>();
+
+        List<Integer> selectedList = new ArrayList<>();
+
+        Random random = new Random();
+        int r = random.nextInt(p1.size());
+
+        for(int i = 0 ; i < r ; i++){
+            int poz_r = random.nextInt(r);
+            selectedList.add(poz_r);
+        }
+
+        for(int i = 0; i< r ; i++){  //se merge prin lista si se adauga elem de pe pozitiile din selectedList din p1 in c1 si in rest se completeaza cu elem din p2
+            if(selectedList.contains(i)){
+                c1.add(p1.get(i));
+            } else{
+                c1.add(p2.get(i));
+            }
+        }
+
+        for(int i= 0; i < r ; i++){
+            if(selectedList.contains(i)){
+                c2.add(p2.get(i));
+            } else{
+                c2.add(p2.get(i));
+            }
+        }
+
+    }
+
+   /* private void mutation(List<Element> c){
+        Random random = new Random();
+        int a = random.nextInt(c.size());
+        int b = random.nextInt(c.size());
+
+        if(a > b){
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+
+        List<Element> sublist = c.subList(a,b);
+        Collections.shuffle(sublist);
+
+
+        // Schimbăm aleator valorile de energii și de timp de procesare între elementele din sublist
+        for (int i = 0; i < sublist.size() - 1; i++) {
+            // Alegem două poziții aleatoare în sublist
+            int index1 = random.nextInt(sublist.size());
+            int index2 = random.nextInt(sublist.size());
+            // Schimbăm valorile de energie și de timp de procesare ale elementelor de pe aceste poziții
+            Element element1 = sublist.get(index1);
+            Element element2 = sublist.get(index2);
+            int tempEnergy = element1.getEnergy();
+            int tempProcessingTime = element1.getProcessingTime();
+            element1.setEnergy(element2.getEnergy());
+            element1.setProcessingTime(element2.getProcessingTime());
+            element2.setEnergy(tempEnergy);
+            element2.setProcessingTime(tempProcessingTime);
+        }
+    } */
 }
