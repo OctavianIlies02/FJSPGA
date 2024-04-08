@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class TaskService {
 
-  private taskUrl = 'http://localhost:8080/api/tasks/';
+  private taskUrl = 'http://localhost:8080/api/tasks';
 
   constructor(private http: HttpClient) { }
 
-  public geTasks(): Observable<Task[]>{
+  public getTasks(): Observable<Task[]>{
     return this.http.get<Task[]>(`${this.taskUrl}`);
   }
 }

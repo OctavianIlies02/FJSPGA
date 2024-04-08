@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "planifications")
@@ -18,9 +19,7 @@ public class Planification {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id")
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @Nullable
     private List<Job> jobs;
 
     @Column
@@ -29,9 +28,14 @@ public class Planification {
 
     public Planification(){}
 
-    public Planification(Long id, int fintess){
+    public Planification(Long id, int fintess, Job jobs){
         this.id = id;
         this.fitness = fintess;
+        this.jobs = new ArrayList<>();
+    }
+
+    public Planification(List<Job> jobs){
+        this.jobs = new ArrayList<>();
     }
 
     public Long getId() {

@@ -1,9 +1,6 @@
 package com.licenta.aplicatieLicenta.AlgEvolutiv;
 
-import com.licenta.aplicatieLicenta.classes.EnergyProcessingTime;
-import com.licenta.aplicatieLicenta.classes.Job;
-import com.licenta.aplicatieLicenta.classes.Planification;
-import com.licenta.aplicatieLicenta.classes.Task;
+import com.licenta.aplicatieLicenta.classes.*;
 
 import java.util.*;
 
@@ -35,6 +32,26 @@ public class Element {
             element.add(auxElement.get(i*2));
             element.add(auxElement.get(i*2+1));
         }
+    }
+
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Element: [");
+        for (int i = 0; i < element.size(); i += 2) {
+            int jobId = element.get(i);
+            int energyMakespanConfiguration = element.get(i + 1);
+            stringBuilder.append("(Job ID: ").append(jobId).append(", Energy-Makespan Configuration: ").append(energyMakespanConfiguration).append(")");
+            if (i < element.size() - 2) {
+                stringBuilder.append(", ");
+            }
+        }
+        stringBuilder.append("]");
+        return stringBuilder.toString();
+    }
+
+
+    public Planification getPlanification(){
+        return planification;
     }
 
 
@@ -141,7 +158,7 @@ public class Element {
 
     }
 
-   /* private void mutation(List<Element> c){
+    private void mutation(List<Element> c){
         Random random = new Random();
         int a = random.nextInt(c.size());
         int b = random.nextInt(c.size());
@@ -164,12 +181,100 @@ public class Element {
             // Schimbăm valorile de energie și de timp de procesare ale elementelor de pe aceste poziții
             Element element1 = sublist.get(index1);
             Element element2 = sublist.get(index2);
-            int tempEnergy = element1.getEnergy();
-            int tempProcessingTime = element1.getProcessingTime();
-            element1.setEnergy(element2.getEnergy());
-            element1.setProcessingTime(element2.getProcessingTime());
-            element2.setEnergy(tempEnergy);
-            element2.setProcessingTime(tempProcessingTime);
+            int tempEnergy = element1.getPlanification().getJobs().get(i).getTasks().get(i).getEnergyProcessingTimeList().get(i).getEnergy();
+            int tempProcessingTime = element1.getPlanification().getJobs().get(i).getTasks().get(i).getEnergyProcessingTimeList().get(i).getProcessingTime();
+            element1.getPlanification().getJobs().get(i).getTasks().get(i).getEnergyProcessingTimeList().get(i).setEnergy(element2.getPlanification().getJobs().get(i).getTasks().get(i).getEnergyProcessingTimeList().get(i).getEnergy());
+            element1.getPlanification().getJobs().get(i).getTasks().get(i).getEnergyProcessingTimeList().get(i).setProcessingTime(element2.getPlanification().getJobs().get(i).getTasks().get(i).getEnergyProcessingTimeList().get(i).getProcessingTime());
+            element2.getPlanification().getJobs().get(i).getTasks().get(i).getEnergyProcessingTimeList().get(i).setEnergy(tempEnergy);
+            element2.getPlanification().getJobs().get(i).getTasks().get(i).getEnergyProcessingTimeList().get(i).setProcessingTime(tempProcessingTime);
         }
-    } */
+    }
+
+    public static void main(String args[]) {
+
+        List<Job> jobList1 = new ArrayList<>();
+        List<Task> taskList1 = new ArrayList<>();
+        List<Task> taskList2 = new ArrayList<>();
+        List<Task> taskList3 = new ArrayList<>();
+        List<EnergyProcessingTime> energyProcessingTimeList = new ArrayList<>();
+
+        EnergyProcessingTime ept1 = new EnergyProcessingTime(1,1);
+        EnergyProcessingTime ept2 = new EnergyProcessingTime(1,1);
+        EnergyProcessingTime ept3 = new EnergyProcessingTime(1,1);
+        EnergyProcessingTime ept4 = new EnergyProcessingTime(1,1);
+        EnergyProcessingTime ept5 = new EnergyProcessingTime(1,1);
+        EnergyProcessingTime ept6 = new EnergyProcessingTime(1,1);
+        EnergyProcessingTime ept7 = new EnergyProcessingTime(1,1);
+        EnergyProcessingTime ept8 = new EnergyProcessingTime(1,1);
+
+        energyProcessingTimeList.add(ept1);
+        energyProcessingTimeList.add(ept2);
+        energyProcessingTimeList.add(ept3);
+        energyProcessingTimeList.add(ept4);
+        energyProcessingTimeList.add(ept5);
+        energyProcessingTimeList.add(ept6);
+        energyProcessingTimeList.add(ept7);
+        energyProcessingTimeList.add(ept8);
+
+        Task t1 = new Task(energyProcessingTimeList);
+        Task t2 = new Task(energyProcessingTimeList);
+        Task t3 = new Task(energyProcessingTimeList);
+        Task t4 = new Task(energyProcessingTimeList);
+        Task t5 = new Task(energyProcessingTimeList);
+        Task t6 = new Task(energyProcessingTimeList);
+        Task t7 = new Task(energyProcessingTimeList);
+        Task t8 = new Task(energyProcessingTimeList);
+
+        taskList1.add(t1);
+        taskList1.add(t2);
+        taskList1.add(t3);
+        taskList2.add(t4);
+        taskList2.add(t5);
+        taskList2.add(t6);
+        taskList3.add(t7);
+        taskList3.add(t8);
+
+        Job j1 = new Job(taskList1);
+        Job j2 = new Job(taskList2);
+        Job j3 = new Job(taskList3);
+
+        jobList1.add(j1);
+        jobList1.add(j2);
+        jobList1.add(j3);
+
+        Planification p1 = new Planification(jobList1);
+
+
+
+
+
+
+        // Creare obiect de tip Element cu numărul specificat și planificarea p1
+        Element e1 = new Element(3, p1);
+
+        // Creare liste de elemente pentru crossover
+        List<Element> s1 = new ArrayList<>();
+        List<Element> s2 = new ArrayList<>();
+        // Adăugare e1 în ambele liste de elemente
+        s1.add(e1);
+        s2.add(e1);
+
+        // Afisarea listei s1 inainte de crossover
+        System.out.println("s1 inainte de crossover:");
+        for (Element element : s1) {
+            System.out.println(element.toString());
+        }
+
+        // Apelarea metodei crossover pe e1
+        e1.crossover(s1, s2);
+
+        // Afisarea listei s1 după crossover
+        System.out.println("s1 dupa crossover:");
+        for (Element element : s1) {
+            System.out.println(element.toString());
+        }
+    }
+
+
 }
+

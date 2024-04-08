@@ -2,6 +2,7 @@ package com.licenta.aplicatieLicenta.classes;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "jobs")
@@ -36,10 +37,14 @@ public class Job {
 
     public Job(){}
 
-    public Job(int id, int arrivalTime, List<Task> tasks){
+    public Job(int id, int arrivalTime){
         this.id = id;
         this.arrivalTime = arrivalTime;
-        this.tasks = tasks;
+    }
+
+    public Job(List<Task> tasks){
+        this.tasks = new ArrayList<>();
+
     }
 
     @Override

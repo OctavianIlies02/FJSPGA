@@ -1,8 +1,6 @@
 package com.licenta.aplicatieLicenta.service;
 
-import com.licenta.aplicatieLicenta.classes.Job;
 import com.licenta.aplicatieLicenta.classes.Task;
-import com.licenta.aplicatieLicenta.repository.JobRepository;
 import com.licenta.aplicatieLicenta.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,4 +26,6 @@ public class TaskService {
     public Optional<Task> getTaskById (long id) {
         return taskRepository.findById(id);
     }
+
+
 }

@@ -1,27 +1,61 @@
-<div *ngIf="machines.length > 0; else noData">
+<div>
     <table>
       <thead>
         <tr>
-          <th>Id</th>
-          <th>Breakdown time</th>
-          <th>Mentenance</th>
-          <th>Standard power</th>
-          <th>Speed</th>
-          <th>Energy consumption</th>
+          <th>Number of jobs</th>
+          <th>Number of machines</th>
+          <th>Number of operations by jobs</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let machine of machines">
-          <td>{{ machine.id }}</td>
-          <td>{{ machine.breakdownTime }}</td>
-          <td>{{ machine.mentenance }}</td>
-          <td>{{ machine.standardPower }}</td>
-          <td>{{ machine.speed}}</td>
-          <td>{{ machine.energyConsumption }}</td>
+        <tr>
+          <td>{{ numberOfJobs }}</td>
+          <td>{{ numberOfMachines }}</td>
+          <td>{{ numberOfOperations / numberOfJobs }}</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <ng-template #noData>
-    <p>Nu există mașini disponibile.</p>
-  </ng-template>
+
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Operations</th>
+          <th>(idTask, idMachine)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.id }}</td>
+          <td>{{ task.machine.id}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <table>
+        <thead>
+            <tr>
+                <th>Modes</th>
+                <th>(idTask, EnergyUsed, ProcessingTime)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of tasks">
+                <td>{{ task.id }}</td>
+                <td>
+                  <table>
+                      <tbody>
+                          <tr *ngFor="let energyProcessingTime of task.energyProcessingTimeList">
+                              <td>{{ energyProcessingTime.energy }}</td>
+                              <td>{{ energyProcessingTime.processingTime }}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

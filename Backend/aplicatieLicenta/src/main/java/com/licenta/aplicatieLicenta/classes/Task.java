@@ -22,7 +22,7 @@ public class Task {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Machine machineRequirement;
+    private Machine machine;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn( name = "task_id")
@@ -35,10 +35,14 @@ public class Task {
     public Task() {
     }
 
-    public Task(Job job, Machine machineRequirement, int finishTime) {
+    public Task(Job job, Machine machine, int finishTime, EnergyProcessingTime energyProcessingTimeList) {
         this.job = job;
-        this.machineRequirement = machineRequirement;
+        this.machine = machine;
         this.finishTime = finishTime;
+        this.energyProcessingTimeList = new ArrayList<>();
+    }
+
+    public Task(List<EnergyProcessingTime> energyProcessingTimeList){
         this.energyProcessingTimeList = new ArrayList<>();
     }
 
@@ -58,12 +62,12 @@ public class Task {
         this.job = job;
     }
 
-    public Machine getMachineRequirement() {
-        return machineRequirement;
+    public Machine getMachine() {
+        return machine;
     }
 
-    public void setMachineRequirement(Machine machineRequirement) {
-        this.machineRequirement = machineRequirement;
+    public void setMachine(Machine machineRequirement) {
+        this.machine = machineRequirement;
     }
 
     public int getFinishTime() {

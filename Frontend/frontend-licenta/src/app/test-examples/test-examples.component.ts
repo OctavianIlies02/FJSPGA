@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-test-examples',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './test-examples.component.css'
 })
 export class TestExamplesComponent {
+
+ 
 
 }
