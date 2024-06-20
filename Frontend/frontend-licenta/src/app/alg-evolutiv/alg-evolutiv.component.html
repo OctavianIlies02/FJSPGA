@@ -1,0 +1,25 @@
+<div>
+  <h2>Run Genetic Algorithm</h2>
+  <form (ngSubmit)="runAlgorithm()">
+    <div>
+      <label for="populationSize">Population Size:</label>
+      <input type="number" id="populationSize" [(ngModel)]="populationSize" name="populationSize" required>
+    </div>
+    <div>
+      <label for="maxGenerations">Max Generations:</label>
+      <input type="number" id="maxGenerations" [(ngModel)]="maxGenerations" name="maxGenerations" required>
+    </div>
+    <div>
+      <label for="lambda">Lambda:</label>
+      <input type="number" id="lambda" [(ngModel)]="lambda" name="lambda" step="0.01" required>
+    </div>
+    <button type="submit">Run Algorithm</button>
+  </form>
+
+  <div *ngIf="result">
+    <h3>Algorithm Result</h3>
+    <pre>Makespan: {{ result.makespan }}</pre>
+    <pre>Energy: {{ result.energy }}</pre>
+    <pre>Fitness: {{ result.fitness }}</pre>
+  </div>
+</div>

@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class HandlingEquipament {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column
     private int power;

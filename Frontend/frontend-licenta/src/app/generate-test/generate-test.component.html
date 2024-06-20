@@ -1,1 +1,31 @@
-<p>generate-test works!</p>
+<form (submit)="onFileSubmit()">
+  <div>
+    <label for="fileInput">Upload file:</label>
+    <input type="file" id="fileInput" name="fileInput" (change)="onFileSelected($event)">
+  </div>
+  <button type="submit">Upload File</button>
+</form>
+
+<form #dataForm="ngForm" (ngSubmit)="onSubmit(); dataForm.reset()">
+  <div>
+    <label for="nbJobs">Number of Jobs:</label>
+    <input type="number" id="nbJobs" name="nbJobs" [(ngModel)]="nbJobs" required>
+  </div>
+  <div>
+    <label for="nbMachines">Number of Machines:</label>
+    <input type="number" id="nbMachines" name="nbMachines" [(ngModel)]="nbMchs" required>
+  </div>
+  <div>
+    <label for="ops">Operations (example: [[&lt;1,2&gt;,&lt;2,1&gt;]],[[&lt;1,2&gt;,&lt;2,1&gt;]]):</label>
+    <textarea id="ops" name="ops" [(ngModel)]="ops" required></textarea>
+  </div>
+  <div>
+    <label for="modes">Modes (example: &lt;1,14,14&gt;,&lt;2,4,6&gt;,&lt;2,4,6&gt;):</label>
+    <textarea id="modes" name="modes" [(ngModel)]="modes" required></textarea>
+  </div>
+  <button type="submit">Generate</button>
+</form>
+
+<form (submit)="onDeleteAllData()">
+  <button type="submit">Delete All Data</button>
+</form>

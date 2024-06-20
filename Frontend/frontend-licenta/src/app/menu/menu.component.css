@@ -1,41 +1,57 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  header {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-  }
-  
-  .logo {
-    margin: 0;
-  }
-  
-  nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  nav ul li {
-    display: inline;
-    margin-right: 20px;
-  }
-  
-  nav ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  nav ul li a:hover {
-    text-decoration: underline;
-  }
-  
+.navbar {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background-color: transparent; /* Transparent background */
+  width: 100%; /* Full width */
+  padding: 20px 0; /* Padding */
+  border-bottom: 1px solid #d3e9ef; /* Bottom border */
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Display options inline */
+}
+
+.navbar li {
+  margin: 0 20px; /* Larger spacing between options */
+}
+
+.navbar a {
+  color: #ffffff; /* Text color */
+  font-weight: bold;
+  padding: 15px 30px; /* Increase padding */
+  border-radius: 30px; /* Rounded corners */
+  text-decoration: none;
+  position: relative; /* For positioning pseudo-element */
+  transition: background-color 0.3s ease; /* Background color transition */
+  background-color: #4158D0; /* Default background color */
+  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%); /* Gradient background */
+}
+
+.navbar a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px; /* Distance from text to line */
+  left: 0;
+  width: 100%;
+  height: 2px; /* Line thickness */
+  background-color: #ffffff; /* Line color */
+  opacity: 0; /* Initially invisible */
+  transition: opacity 0.3s ease; /* Opacity transition */
+}
+
+.navbar a:hover {
+  background-color: rgba(138, 122, 122, 0.1); /* Transparent background on hover */
+}
+
+.navbar a.active {
+  background-color: #ffffff; /* Background color for selected option */
+  color: #FFFFFF; /* Text color for selected option */
+}
+
+.navbar a.active::after {
+  opacity: 1; /* Make the line visible for selected option */
+}

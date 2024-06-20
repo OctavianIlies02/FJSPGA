@@ -1,24 +1,60 @@
-<ul class="blue-box">
-    <li>
-        <label for="text1">Test examples:</label>
-        <select id="text1">
-            <option value="example1">Example 1</option>
-            <option value="example2">Example 2</option>
-            <option value="example3">Example 3</option>
-        </select>
-    </li>
-    <li>
-        <label for="text2">Mutation rate</label>
-        <input type="text" id="text2" placeholder="Ex 4">
-    </li>
-    <li>
-        <label for="text3">Mixing rate</label>
-        <input type="text" id="text3" placeholder="Ex 1">
-    </li>
-    <li>
-        <label for="text4">Population Size</label>
-        <input type="text" id="text4" placeholder="Ex 3">
-    </li>
-  
-  </ul>
-  
+<div class="container">
+  <div class="blue-box">
+    <h2>Run Genetic Algorithm</h2>
+    <form (ngSubmit)="runAlgorithm()">
+      <div class="form-group">
+        <label for="populationSize">Population Size:</label>
+        <input type="number" id="populationSize" [(ngModel)]="populationSize" name="populationSize" required>
+      </div>
+      <div class="form-group">
+        <label for="maxGenerations">Max Generations:</label>
+        <input type="number" id="maxGenerations" [(ngModel)]="maxGenerations" name="maxGenerations" required>
+      </div>
+      <div class="form-group">
+        <label for="lambda">Lambda:</label>
+        <input type="number" id="lambda" [(ngModel)]="lambda" name="lambda" step="0.01" required>
+      </div>
+      <button type="submit">Run Algorithm</button>
+    </form>
+  </div>
+
+  <div *ngIf="result" class="result-box">
+    <h3>Algorithm Result</h3>
+    <div>Makespan: {{ result.makespan }}</div>
+    <div>Energy: {{ result.energy }}</div>
+    <div>Fitness: {{ result.fitness }}</div>
+  </div>
+
+  <div class="chart-container">
+    <div class="line-chart-container">
+      <canvas id="lineChart" width="400" height="400"></canvas>
+    </div>
+  </div>
+
+  <div class="red-box">
+    <h2>Results from experimentations:</h2>
+    <h2>Reference scenario definition:</h2>
+    <ul class="results-list">
+      <li>Data Set #:</li>
+      <li>Use of Due Date:</li>
+      <li>Performance Evaluation:</li>
+      <li>Primary Objective Function:</li>
+      <li>Parameters of the Objective Function:</li>
+      <li>Other Measured Performances:</li>
+      <li>Value of Objective Function:</li>
+    </ul>
+    <h2>Tested dynamic scenarios:</h2>
+    <table class="dynamic-table">
+      <tbody>
+        <tr>
+          <th>Scenario #</th>
+          <th>Parameters of the dynamic scenario to fix</th>
+          <th>Value of parameters</th>
+          <th>Value of deteriorated functions:</th>
+          <th>Cmax</th>
+          <th>Star rating</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

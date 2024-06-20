@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 @Entity
 public class Machine {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
     private int breakdownTime;

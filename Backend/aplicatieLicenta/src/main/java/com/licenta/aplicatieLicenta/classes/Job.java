@@ -9,31 +9,11 @@ import java.util.List;
 @Entity
 public class Job {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
     private int arrivalTime;
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
-
-
-    /*@OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_id")
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @Nullable
-    private List<Machine> machines;
-    @Column
-    private int n = 1;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "operation_id")
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @Nullable
-    private Operation operation;
-    @Column
-    private double fitness; */
-
 
     public Job(){}
 
@@ -42,10 +22,11 @@ public class Job {
         this.arrivalTime = arrivalTime;
     }
 
-    public Job(List<Task> tasks){
-        this.tasks = new ArrayList<>();
-
+    public Job(int id, List<Task> tasks){
+        this.id = id;
+        this.tasks = tasks != null ? tasks : new ArrayList<>();
     }
+
 
     @Override
     public String toString() {
@@ -76,6 +57,20 @@ public class Job {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public int getTotalLoad() {
+        int totalLoad = 0;
+        for (Task task : tasks) {
+            for (EnergyProcessingTime ept : task.getEnergyProcessingTimeList()) {
+                totalLoad += ept.getProcessingTime();
+            }
+        }
+        return totalLoad;
+    }
+
+    public int getTaskCount() {
+        return tasks.size();
     }
 
 }

@@ -12,6 +12,10 @@ export class EnergyProcessingTimeService {
 
   constructor(private http: HttpClient) { }
 
+  public createEnergyProcessingTime(energyprocessingtime: EnergyProcessingTime): Observable<EnergyProcessingTime>{
+    return this.http.post<EnergyProcessingTime>(`${this.energyProcessingTimeUrl}`,energyprocessingtime);
+  }
+
   public getEnergyProcessingTimes(): Observable<EnergyProcessingTime[]>{
     return this.http.get<EnergyProcessingTime[]>(`${this.energyProcessingTimeUrl}`);
   }

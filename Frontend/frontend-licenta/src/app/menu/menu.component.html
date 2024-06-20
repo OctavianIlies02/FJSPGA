@@ -1,13 +1,7 @@
-<header>
-    <div class="container">
-      <h1 class="logo">Algoritmi de planificare a productiei</h1>
-      <nav>
-        <ul>
-          <li><a href="/visualize-data">Visualize data</a></li>
-          <li><a href="/test-examples">Test examples</a></li>
-          <li><a href="/generate-test">Generate test</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  
+<nav class="navbar">
+  <ul>
+    <li><a href="/visualize-data" [class.active]="isActive('/visualize-data')">Visualize data</a></li>
+    <li><a href="/test-examples" [class.active]="isActive('/test-examples')">Test examples</a></li>
+    <li><a href="/generate-test" [class.active]="isActive('/generate-test')">Generate test</a></li>
+  </ul>
+</nav>

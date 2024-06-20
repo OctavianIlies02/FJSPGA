@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 public class Planification {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToMany(fetch = FetchType.LAZY)
@@ -35,7 +35,16 @@ public class Planification {
     }
 
     public Planification(List<Job> jobs){
-        this.jobs = new ArrayList<>();
+        this.jobs = new ArrayList<>(jobs);
+    }
+
+    @Override
+    public String toString() {
+        return "Planification{" +
+                "id=" + id +
+                ", jobs=" + jobs +
+                ", fitness=" + fitness +
+                '}';
     }
 
     public Long getId() {

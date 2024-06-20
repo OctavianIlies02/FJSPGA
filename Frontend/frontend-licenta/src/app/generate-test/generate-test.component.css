@@ -1,0 +1,48 @@
+form {
+  width: 400px; /* Form width */
+  margin: 30px auto 0; /* Center horizontally and add top margin */
+  text-align: center; /* Center text */
+  padding: 20px; /* Padding inside the form */
+  border-radius: 10px; /* Rounded corners for the form */
+  background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%); /* Consistent gradient background */
+  border: 2px solid rgba(0, 0, 0, 0.2); /* Semi-transparent border */
+}
+
+form div {
+  margin-bottom: 15px; /* Space between form elements */
+}
+
+form label {
+  display: inline-block; /* Ensures proper label alignment */
+  width: 150px; /* Label width */
+  text-align: left; /* Left-align label text */
+}
+
+form input[type="number"],
+form input[type="file"],
+form textarea {
+  width: 250px; /* Input field width */
+  padding: 5px; /* Padding for input fields */
+  border-radius: 5px; /* Rounded corners for input fields */
+  border: 1px solid #ccc; /* Thin border for input fields */
+}
+
+form button[type="submit"] {
+  display: block; /* Make button take full width */
+  width: 100%; /* Button width */
+  margin-top: 20px; /* Space above the button */
+  padding: 10px; /* Padding for the button */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners for button */
+  background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%); /* Consistent gradient background */
+  color: white; /* White text color */
+  font-size: 16px; /* Text size */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s; /* Background color transition */
+  font-weight: bold;
+  
+}
+
+form button[type="submit"]:hover {
+  background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 80%); /* Adjusted hover gradient */
+}

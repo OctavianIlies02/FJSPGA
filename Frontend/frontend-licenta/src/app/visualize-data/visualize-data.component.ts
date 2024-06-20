@@ -9,11 +9,15 @@ import { Task } from '../Classes/Task';
 import { Job } from '../Classes/Job';
 import { EnergyProcessingTimeService } from '../Services/energy-processing-time.service';
 import { EnergyProcessingTime } from '../Classes/EnergyProcessingTime';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 
 @Component({
   selector: 'app-visualize-data',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule,MatCardModule, MatButtonModule,MatButtonModule, MatMenuModule, MatIconModule],
   templateUrl: './visualize-data.component.html',
   styleUrl: './visualize-data.component.css'
 })

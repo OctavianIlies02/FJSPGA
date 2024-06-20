@@ -1,12 +1,13 @@
 package com.licenta.aplicatieLicenta.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "energyprocessingtimes")
 public class EnergyProcessingTime {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
@@ -14,6 +15,12 @@ public class EnergyProcessingTime {
 
     @Column
     private int processingTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Task task;
+
 
     public EnergyProcessingTime(){}
 
@@ -30,7 +37,13 @@ public class EnergyProcessingTime {
         this.id = id;
     }
 
-     public int getEnergy(){
+    @Override
+    public String toString() {
+        return "Energy" + energy + "processingTime" + processingTime;
+    }
+
+
+    public int getEnergy(){
          return energy;
      }
 
@@ -45,4 +58,7 @@ public class EnergyProcessingTime {
     }
 
 
+    public void setTask(Task task) {
+        this.task = task;
+    }
 }

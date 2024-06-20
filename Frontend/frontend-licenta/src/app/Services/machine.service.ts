@@ -12,6 +12,10 @@ export class MachineService {
 
   constructor(private http: HttpClient) { }
 
+  public createMachine(machine: Machine): Observable<Machine>{
+    return this.http.post<Machine>(`${this.machineUrl}`,machine);
+  }
+
   public getMachines(): Observable<Machine[]>{
     return this.http.get<Machine[]>(`${this.machineUrl}`);
   }

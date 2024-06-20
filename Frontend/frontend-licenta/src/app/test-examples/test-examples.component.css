@@ -1,62 +1,105 @@
-.blue-box {
-    background-color: #819197;
-    padding: 40px;
-    border-radius: 20px;
-    list-style-type: none;
-    width: 300px;
-    margin: 0 auto;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
 }
 
-.blue-box li {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
+form button[type="submit"] {
+  display: block; /* Make button take full width */
+  width: 100%; /* Button width */
+  margin-top: 20px; /* Space above the button */
+  padding: 10px; /* Padding for the button */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners for button */
+  background: linear-gradient(43deg, #2a2a2e 0%, #ab9faa 46%, #b7b2a9 100%, #819197 100%); /* Consistent gradient background */
+  color: white; /* White text color */
+  font-size: 16px; /* Text size */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s; /* Background color transition */
+  font-weight: bold;
+  
+}
+
+.blue-box {
+  background-color: #819197;
+  padding: 20px;
+  border-radius: 20px;
+  width: 300px;
+  border: 2px solid black;
+}
+
+.form-group {
+  margin-bottom: 20px;
 }
 
 .blue-box label {
-    margin-right: 10px;
-    min-width: 120px;
-    white-space: nowrap;
+  margin-right: 10px;
 }
 
-.blue-box input[type="text"], 
-.blue-box select {
-    width: calc(100% - 130px);
-    padding: 10px;
-    border-radius: 10px;
-    border: 2px solid #ccc;
-    font-size: 16px;
+.blue-box input[type="number"] {
+  width: calc(100% - 120px);
+  padding: 8px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  font-size: 16px;
 }
 
-.pie-chart {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    border-radius: 50%;
-    background-color: #f1f1f1;
-    overflow: hidden;
+.result-box {
+  background-color: #819197;
+  padding: 20px;
+  border-radius: 20px;
+  width: 300px;
+  border: 2px solid black;
+  margin-top: 20px;
 }
 
-.slice {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    clip-path: polygon(50% 50%, 100% 100%, 0 100%);
-    transition: transform 0.3s ease;
-    z-index: 1; /* Adăugăm z-index */
+.chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
 }
 
-.slice:nth-child(1) { background: conic-gradient(#FFA500 0% 30%, transparent 0 100%); }
-.slice:nth-child(2) { background: conic-gradient(#FF6347 0% 80%, transparent 0 100%); }
-.slice:nth-child(3) { background: conic-gradient(#4682B4 0% 100%, transparent 0 100%); }
+.red-box {
+  background-color: #3ca6b4;
+  padding: 20px;
+  border-radius: 20px;
+  width: auto;
+  border: 2px solid black;
+}
 
-/* Efectul de hover pentru animație */
-.slice:hover {
-    transform: scale(1.1);
-    z-index: 2; /* Adăugăm z-index */
+.results-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.results-list li {
+  margin-bottom: 10px;
+  text-align: left;
+  margin-left: 350px;
+}
+
+.dynamic-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dynamic-table th,
+.dynamic-table td {
+  border: 2px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+.chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1; /* Asigură că graficul ocupă spațiul disponibil */
+}
+
+.line-chart-container {
+  width: 100%; /* Ajustează lățimea containerului graficului de linie */
+  max-width: 400px; /* Maximizează lățimea graficului */
+  text-align: center;
 }

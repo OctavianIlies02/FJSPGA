@@ -1,5 +1,6 @@
-<div>
-    <table>
+<div class="blue-container">
+  <div class="statistics-container">
+    <table class="styled-table">
       <thead>
         <tr>
           <th>Number of jobs</th>
@@ -16,46 +17,45 @@
       </tbody>
     </table>
   </div>
+</div>
+  
 
-  <div>
-    <table>
+  <div class="container">
+    <div class="operations-header">Operations</div>
+    <table class="styled-table">
       <thead>
         <tr>
-          <th>Operations</th>
-          <th>(idTask, idMachine)</th>
+          <th>idTask</th>
+          <th>idMachine</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let task of tasks">
           <td>{{ task.id }}</td>
-          <td>{{ task.machine.id}}</td>
+          <td>{{ task.machine.id }}</td>
         </tr>
       </tbody>
     </table>
   </div>
+  
 
-  <div>
-    <table>
-        <thead>
-            <tr>
-                <th>Modes</th>
-                <th>(idTask, EnergyUsed, ProcessingTime)</th>
-            </tr>
-        </thead>
+  
+
+<div class="card-container">
+  <div *ngFor="let task of tasks" class="card">
+    <div class="card-content">
+      <p class="card-title">Task ID: {{ task.id }}</p>
+      <p class="card-para">Machine ID: {{ task.machine.id }}</p>
+      <p class="card-para">Energy Used and Processing Time:</p>
+      <table>
         <tbody>
-            <tr *ngFor="let task of tasks">
-                <td>{{ task.id }}</td>
-                <td>
-                  <table>
-                      <tbody>
-                          <tr *ngFor="let energyProcessingTime of task.energyProcessingTimeList">
-                              <td>{{ energyProcessingTime.energy }}</td>
-                              <td>{{ energyProcessingTime.processingTime }}</td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </td>
-            </tr>
+          <tr *ngFor="let energyProcessingTime of task.energyProcessingTimeList">
+            <td>Energy Used: {{ energyProcessingTime.energy }}</td>
+            <td>Processing Time: {{ energyProcessingTime.processingTime }}</td>
+          </tr>
         </tbody>
-    </table>
+      </table>
+    </div>
+  </div>
 </div>
+

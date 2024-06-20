@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,16 +34,34 @@ public class Task {
     public Task() {
     }
 
-    public Task(Job job, Machine machine, int finishTime, EnergyProcessingTime energyProcessingTimeList) {
+    public Task(Job job, Machine machine, int finishTime, List<EnergyProcessingTime> energyProcessingTimeList) {
         this.job = job;
         this.machine = machine;
         this.finishTime = finishTime;
-        this.energyProcessingTimeList = new ArrayList<>();
+        this.energyProcessingTimeList = new ArrayList<>(energyProcessingTimeList);
     }
 
-    public Task(List<EnergyProcessingTime> energyProcessingTimeList){
-        this.energyProcessingTimeList = new ArrayList<>();
+    public Task(Long id, Job job, Machine machine, List<EnergyProcessingTime> energyProcessingTimeList) {
+        this.id = id;
+        this.job = job;
+        this.machine = machine;
+        this.energyProcessingTimeList = new ArrayList<>(energyProcessingTimeList);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Task: id=").append(id).append(", finishTime=").append(finishTime).append("\n");
+        stringBuilder.append("Energy Processing Times: \n");
+        for (EnergyProcessingTime energyProcessingTime : energyProcessingTimeList) {
+            stringBuilder.append("Energy: ").append(energyProcessingTime.getEnergy())
+                    .append(", Processing Time: ").append(energyProcessingTime.getProcessingTime()).append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+
+
 
     public Long getId() {
         return id;
@@ -85,5 +102,6 @@ public class Task {
     public void setEnergyProcessingTimeList(List<EnergyProcessingTime> energyProcessingTimeList) {
         this.energyProcessingTimeList = energyProcessingTimeList;
     }
+
 
 }
