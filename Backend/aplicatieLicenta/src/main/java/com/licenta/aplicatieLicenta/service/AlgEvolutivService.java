@@ -31,8 +31,9 @@ public class AlgEvolutivService {
         Element element = new Element(n, planification);
         element.evaluateFitness(lambda);
 
-        double makespan = element.getMaxMakespan();
-        double energy = element.getMaxEnergy();
+
+        double makespan = element.getCurrentMakespan() ;
+        double energy = element.getCurrentEnergy() ;
         double fitness = element.getFitness();
 
         return Map.of(
@@ -41,5 +42,8 @@ public class AlgEvolutivService {
                 "fitness", fitness
         );
     }
+
+
+
 }
 

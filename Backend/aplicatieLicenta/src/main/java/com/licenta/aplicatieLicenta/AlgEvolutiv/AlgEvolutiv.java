@@ -1,6 +1,8 @@
 package com.licenta.aplicatieLicenta.AlgEvolutiv;
 
+import com.licenta.aplicatieLicenta.classes.Job;
 import com.licenta.aplicatieLicenta.classes.Planification;
+import com.licenta.aplicatieLicenta.classes.Task;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,21 +63,29 @@ public class AlgEvolutiv {
         reportBestSchedule();
     }
 
+
+
     private void initializePopulation(int genSize) {
         Random random = new Random();
         int speed;
 
         for (int i = 0; i < populationSize; i++) {
-            Element element = new Element(n, planification);
-
             if (lambda < 0.6) {
                 speed = 1;
             } else if (lambda == 0.6) {
                 speed = 2;
             } else if (lambda >= 0.7 && lambda <= 0.9) {
-                speed = random.nextInt(2) + 2; // 2 sau 3
+                speed = random.nextInt(2) + 2;
             } else {
                 speed = 3;
+            }
+
+            Element element = new Element(n, planification);
+
+            for (Job job : element.getPlanification().getJobs()) {
+                for (Task task : job.getTasks()) {
+                    task.getMachine().setSpeed(speed);
+                }
             }
 
             double ruleProbability = random.nextDouble();
@@ -94,9 +104,6 @@ public class AlgEvolutiv {
             } else {
                 element.applyRandomRule(); // Random Rule
             }
-
-
-            // atribuire speed?
 
             population.add(element);
         }
@@ -138,59 +145,17 @@ public class AlgEvolutiv {
         System.out.println("Best schedule: " + bestElement);
     }
 
-   /* public static void main(String[] args) {
-        // Example usage
-        List<Job> jobList = createJobList();
-        Planification planification = new Planification(jobList);
-        AlgEvolutiv algEvolutiv = new AlgEvolutiv(3, planification, 10, 100, 0.5);
-        algEvolutiv.runAlgorithm();
+
+    public Element getBestElement() {
+        Element bestElement = population.get(0);
+        for (Element element : population) {
+            if (element.getFitness() < bestElement.getFitness()) {
+                bestElement = element;
+            }
+        }
+        return bestElement;
     }
-    private static List<Job> createJobList() {
-        List<Job> jobList = new ArrayList<>();
-        List<Task> taskList1 = new ArrayList<>();
-        List<Task> taskList2 = new ArrayList<>();
-        List<Task> taskList3 = new ArrayList<>();
-        Job j1 = new Job(1,taskList1);
-        Job j2 = new Job(2,taskList2);
-        Job j3 = new Job(3,taskList3);
-        jobList.add(j1);
-        jobList.add(j2);
-        jobList.add(j3);
-
-        // Creăm sarcinile pentru primul job
-        List<EnergyProcessingTime> energyProcessingTimeList1 = new ArrayList<>();
-        energyProcessingTimeList1.add(new EnergyProcessingTime(1, 1)); // Configurație 1: Timp = 1, Energie = 1
-        energyProcessingTimeList1.add(new EnergyProcessingTime(3, 3)); // Configurație 2: Timp = 1, Energie = 1
-        energyProcessingTimeList1.add(new EnergyProcessingTime(2, 2)); // Configurație 2: Timp = 1, Energie = 1
-
-
-        taskList1.add(new Task(1,energyProcessingTimeList1));// Adăugăm sarcinile cu configurațiile create mai sus
-        taskList1.add(new Task(2,energyProcessingTimeList1));
-        taskList1.add(new Task(3,energyProcessingTimeList1));
-
-        // Creăm sarcinile pentru al doilea job
-        List<EnergyProcessingTime> energyProcessingTimeList2 = new ArrayList<>();
-        energyProcessingTimeList2.add(new EnergyProcessingTime(1, 1));
-        energyProcessingTimeList2.add(new EnergyProcessingTime(3, 3));
-        energyProcessingTimeList2.add(new EnergyProcessingTime(1, 1));
-
-
-        taskList2.add(new Task(4,energyProcessingTimeList2));
-        taskList2.add(new Task(5,energyProcessingTimeList2));
-        taskList2.add(new Task(6,energyProcessingTimeList2));
-
-        // Creăm sarcinile pentru al treilea job
-        List<EnergyProcessingTime> energyProcessingTimeList3 = new ArrayList<>();
-        energyProcessingTimeList3.add(new EnergyProcessingTime(2, 2));
-        energyProcessingTimeList3.add(new EnergyProcessingTime(1, 1));
 
 
 
-        taskList3.add(new Task(7,energyProcessingTimeList3));
-        taskList3.add(new Task(8,energyProcessingTimeList3));
-        taskList3.add(new Task(9,energyProcessingTimeList3));
-
-
-        return jobList;
-    } */
 }

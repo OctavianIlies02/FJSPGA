@@ -101,8 +101,53 @@ public class Element {
                 }
             }
         }
-        fitness = (lambda * currentMakespan) + ((1 - lambda) * currentEnergy);
+        fitness = (lambda * (currentMakespan/getMaxMakespan())) + ((1 - lambda) * (currentEnergy/getMaxEnergy()));
 
+    }
+    public double getCurrentMakespan() {
+        double currentMakespan = 0;
+        int[] tasks = new int[n + 1];
+        Arrays.fill(tasks, 0);
+
+        for (int i = 0; i < n; i++) {
+            int jobId = element.get(i * 2);
+            int energyMakespanConfiguration = element.get(i * 2 + 1);
+            tasks[jobId]++;
+            for (Job job : planification.getJobs()) {
+                if (job.getId() == jobId) {
+                    for (Task task : job.getTasks()) {
+                        if (task.getId() == tasks[jobId]) {
+                            currentMakespan += task.getEnergyProcessingTimeList().get(energyMakespanConfiguration).getProcessingTime();
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return currentMakespan;
+    }
+
+    public double getCurrentEnergy() {
+        double currentEnergy = 0;
+        int[] tasks = new int[n + 1];
+        Arrays.fill(tasks, 0);
+
+        for (int i = 0; i < n; i++) {
+            int jobId = element.get(i * 2);
+            int energyMakespanConfiguration = element.get(i * 2 + 1);
+            tasks[jobId]++;
+            for (Job job : planification.getJobs()) {
+                if (job.getId() == jobId) {
+                    for (Task task : job.getTasks()) {
+                        if (task.getId() == tasks[jobId]) {
+                            currentEnergy += task.getEnergyProcessingTimeList().get(energyMakespanConfiguration).getEnergy();
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return currentEnergy;
     }
 
     public double getMaxMakespan() {
@@ -146,37 +191,40 @@ public class Element {
     }
 
 
-    public void crossover(List<Element> p1, List<Element> p2){
+    public void crossover(List<Element> p1, List<Element> p2) {
         List<Element> c1 = new ArrayList<>();
         List<Element> c2 = new ArrayList<>();
-
-        List<Integer> selectedList = new ArrayList<>();
 
         Random random = new Random();
         int r = random.nextInt(p1.size());
 
-        for(int i = 0 ; i < r ; i++){
-            int poz_r = random.nextInt(r);
-            selectedList.add(poz_r);
+        // Select random subset from parent 1 and copy to child 1
+        for (int i = 0; i < r; i++) {
+            int selectedPosition = random.nextInt(p1.size());
+            c1.add(p1.get(selectedPosition));
         }
 
-        for(int i = 0; i< r ; i++){
-            if(selectedList.contains(i)){
-                c1.add(p1.get(i));
-            } else{
+        // Translate remaining from parent 2 to child 1
+        for (int i = 0; i < p2.size(); i++) {
+            if (!c1.contains(p2.get(i))) {
                 c1.add(p2.get(i));
             }
         }
 
-        for(int i= 0; i < r ; i++){
-            if(selectedList.contains(i)){
-                c2.add(p2.get(i));
-            } else{
-                c2.add(p2.get(i));
-            }
+        // Select random subset from parent 2 and copy to child 2
+        for (int i = 0; i < r; i++) {
+            int selectedPosition = random.nextInt(p2.size());
+            c2.add(p2.get(selectedPosition));
         }
 
+        // Translate remaining from parent 1 to child 2
+        for (int i = 0; i < p1.size(); i++) {
+            if (!c2.contains(p1.get(i))) {
+                c2.add(p1.get(i));
+            }
+        }
     }
+
 
     public void mutation(List<Element> c){
         Random random = new Random();
@@ -306,153 +354,37 @@ public class Element {
     }
 
     private int getMachineLoad(int jobId) {
-
+        for (Job job : planification.getJobs()) {
+            if (job.getId() == jobId) {
+                int totalLoad = 0;
+                List<Task> tasks = job.getTasks();
+                for (Task task : tasks) {
+                    Machine machine = task.getMachine();
+                    if (machine != null) {
+                        totalLoad += machine.getSpeed() * machine.getEnergyConsumption();
+                    }
+                }
+                return totalLoad;
+            }
+        }
         return 0;
     }
 
     private int getMachineTasksCount(int jobId) {
-
+        for (Job job : planification.getJobs()) {
+            if (job.getId() == jobId) {
+                int totalTasks = 0;
+                List<Task> tasks = job.getTasks();
+                for (Task task : tasks) {
+                    if (task.getMachine() != null) {
+                        totalTasks++;
+                    }
+                }
+                return totalTasks;
+            }
+        }
         return 0;
     }
-
-    public static void main(String args[]) {
-
-       /* List<Job> jobList = createJobList();
-        Planification p = new Planification(jobList);
-        System.out.println(p); */
-
-
-
-      /*  // Creăm lista de joburi
-        List<Job> jobList = createJobList();
-        // Inițializăm o planificare cu lista de joburi
-        Planification planification = new Planification(jobList);
-        // Inițializăm un element cu un număr de sarcini și planificarea create
-        Element element = new Element(3, planification);
-
-        System.out.println("Element initial:");
-        System.out.println(element.toString());
-
-        //pt parinte 2
-        List<Job> jobList1 = createParentList();
-        Planification planification1 = new Planification(jobList1);
-        Element element1 = new Element(3,planification1);
-
-        // Realizăm operația de crossover între elementul inițial și o copie a sa
-        Element copyElement = new Element(3, planification);
-        List<Element> parent1 = new ArrayList<>();
-        List<Element> parent2 = new ArrayList<>();
-        parent1.add(element);
-        parent2.add(element1);
-        element.crossover(parent1, parent2);
-
-        System.out.println("Element dupa crossover:");
-        System.out.println(element.toString());
-
-        // Realizăm operația de mutație pe unul dintre părinți
-        element.mutation(parent1);
-
-        System.out.println("Element dupa mutatie:");
-        System.out.println(element.toString()); */
-    }
-
-    /*private static List<Job> createJobList() {
-        List<Job> jobList = new ArrayList<>();
-        List<Task> taskList1 = new ArrayList<>();
-        List<Task> taskList2 = new ArrayList<>();
-        List<Task> taskList3 = new ArrayList<>();
-        Job j1 = new Job(1,taskList1);
-        Job j2 = new Job(2,taskList2);
-        Job j3 = new Job(3,taskList3);
-        jobList.add(j1);
-        jobList.add(j2);
-        jobList.add(j3);
-
-        // Creăm sarcinile pentru primul job
-        List<EnergyProcessingTime> energyProcessingTimeList1 = new ArrayList<>();
-        energyProcessingTimeList1.add(new EnergyProcessingTime(1, 1)); // Configurație 1: Timp = 1, Energie = 1
-        energyProcessingTimeList1.add(new EnergyProcessingTime(3, 3)); // Configurație 2: Timp = 1, Energie = 1
-        energyProcessingTimeList1.add(new EnergyProcessingTime(2, 2)); // Configurație 2: Timp = 1, Energie = 1
-
-
-        taskList1.add(new Task(energyProcessingTimeList1));// Adăugăm sarcinile cu configurațiile create mai sus
-        taskList1.add(new Task(energyProcessingTimeList1));
-        taskList1.add(new Task(energyProcessingTimeList1));
-
-        // Creăm sarcinile pentru al doilea job
-        List<EnergyProcessingTime> energyProcessingTimeList2 = new ArrayList<>();
-        energyProcessingTimeList2.add(new EnergyProcessingTime(1, 1));
-        energyProcessingTimeList2.add(new EnergyProcessingTime(3, 3));
-        energyProcessingTimeList2.add(new EnergyProcessingTime(1, 1));
-
-
-        taskList2.add(new Task(energyProcessingTimeList2));
-        taskList2.add(new Task(energyProcessingTimeList2));
-        taskList2.add(new Task(energyProcessingTimeList2));
-
-        // Creăm sarcinile pentru al treilea job
-        List<EnergyProcessingTime> energyProcessingTimeList3 = new ArrayList<>();
-        energyProcessingTimeList3.add(new EnergyProcessingTime(2, 2));
-        energyProcessingTimeList3.add(new EnergyProcessingTime(1, 1));
-
-
-
-        taskList3.add(new Task(energyProcessingTimeList3));
-        taskList3.add(new Task(energyProcessingTimeList3));
-        taskList3.add(new Task(energyProcessingTimeList3));
-
-
-        return jobList;
-    }
-
-    private static List<Job> createParentList() {
-        List<Job> jobList = new ArrayList<>();
-        List<Task> taskList1 = new ArrayList<>();
-        List<Task> taskList2 = new ArrayList<>();
-        List<Task> taskList3 = new ArrayList<>();
-        Job j1 = new Job(1,taskList1);
-        Job j2 = new Job(2,taskList2);
-        Job j3 = new Job(3,taskList3);
-        jobList.add(j1);
-        jobList.add(j2);
-        jobList.add(j3);
-
-        // Creăm sarcinile pentru primul job
-        List<EnergyProcessingTime> energyProcessingTimeList1 = new ArrayList<>();
-        energyProcessingTimeList1.add(new EnergyProcessingTime(3, 3)); // Configurație 1: Timp = 1, Energie = 1
-        energyProcessingTimeList1.add(new EnergyProcessingTime(3, 3)); // Configurație 2: Timp = 1, Energie = 1
-        energyProcessingTimeList1.add(new EnergyProcessingTime(2, 2)); // Configurație 2: Timp = 1, Energie = 1
-
-
-        taskList1.add(new Task(energyProcessingTimeList1));// Adăugăm sarcinile cu configurațiile create mai sus
-        taskList1.add(new Task(energyProcessingTimeList1));
-        taskList1.add(new Task(energyProcessingTimeList1));
-
-        // Creăm sarcinile pentru al doilea job
-        List<EnergyProcessingTime> energyProcessingTimeList2 = new ArrayList<>();
-        energyProcessingTimeList2.add(new EnergyProcessingTime(2, 2));
-        energyProcessingTimeList2.add(new EnergyProcessingTime(3, 3));
-        energyProcessingTimeList2.add(new EnergyProcessingTime(1, 1));
-
-
-        taskList2.add(new Task(energyProcessingTimeList2));
-        taskList2.add(new Task(energyProcessingTimeList2));
-        taskList2.add(new Task(energyProcessingTimeList2));
-
-        // Creăm sarcinile pentru al treilea job
-        List<EnergyProcessingTime> energyProcessingTimeList3 = new ArrayList<>();
-        energyProcessingTimeList3.add(new EnergyProcessingTime(1, 1));
-        energyProcessingTimeList3.add(new EnergyProcessingTime(2, 2));
-
-
-
-        taskList3.add(new Task(energyProcessingTimeList3));
-        taskList3.add(new Task(energyProcessingTimeList3));
-        taskList3.add(new Task(energyProcessingTimeList3));
-
-
-        return jobList;
-    }*/
 
 
 
