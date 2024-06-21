@@ -1,7 +1,6 @@
 package com.licenta.aplicatieLicenta.service;
 
 import com.licenta.aplicatieLicenta.classes.EnergyProcessingTime;
-import com.licenta.aplicatieLicenta.classes.HandlingEquipament;
 import com.licenta.aplicatieLicenta.repository.EnergyProcessingTimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
