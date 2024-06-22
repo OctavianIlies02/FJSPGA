@@ -38,6 +38,8 @@ export class GenerateTestComponent {
     }
   }
 
+  // parses a string representation of operations into a three-dimensional array
+ //where each sub-array represents job operations with task and machine IDs.
   parseOps(opsStr: string): number[][][] {
     const opsArray = opsStr
       .replace(/^\[\[/, '')
@@ -55,7 +57,8 @@ export class GenerateTestComponent {
     });
   }
   
-  
+  //Parses a string representation of task modes into a two-dimensional array,
+  //where each sub-array contains task ID, energy, and processing time.
   parseModes(modesStr: string): number[][] {
     const cleanStr = modesStr.replace(/[{}\s]/g, '');
     console.log('After removing braces and spaces: ', cleanStr);
@@ -71,7 +74,8 @@ export class GenerateTestComponent {
     return modesArray;
   }
   
-
+  //Handles the form submission, parses the operations and modes strings,
+  //and sends the data to a service for processing and storage.
   onSubmit() {
     if (this.nbJobs && this.nbMchs && this.ops && this.modes) {
       try {
@@ -98,7 +102,7 @@ export class GenerateTestComponent {
   }
 
   
-
+  //Sends a request to delete all data through the service, handling success and error responses.
   onDeleteAllData() {
     this.writeService.deleteAllData().subscribe(
       response => {

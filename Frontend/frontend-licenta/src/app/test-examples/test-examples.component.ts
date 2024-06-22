@@ -68,6 +68,7 @@ export class TestExamplesComponent {
 
   lineChart: Chart | null = null;
 
+  // creates the line chart and displays the data in it
   createLineChart(): void {
     const labels = ['Run 1', 'Run 2', 'Run 3', 'Run 4', 'Run 5'];
     const makespanData = this.multipleResults.map(result => result.makespan);

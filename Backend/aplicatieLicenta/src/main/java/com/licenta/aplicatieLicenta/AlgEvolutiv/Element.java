@@ -10,6 +10,9 @@ public class Element {
     private Planification planification;
     private int n;
 
+
+    // constructs an Element object by initializing it with a random task configuration
+    // based on a given planification and a specified number of tasks (n).
     public Element(int n, Planification planification){
         this.planification = planification;
         this.n = n;
@@ -74,7 +77,8 @@ public class Element {
         return planification;
     }
 
-
+    // evaluates the fitness of a solution configuration based on the makespan and energy consumption,
+    // using a weighted combination controlled by the parameter lambda.
     public void evaluateFitness(double lambda) {
         double maxMakespan = getMaxMakespan();
         double maxEnergy = getMaxEnergy();
@@ -225,7 +229,7 @@ public class Element {
         }
     }
 
-
+    // mutates a list of elements by shuffling a random sublist of each element's energy processing time list.
     public void mutation(List<Element> c){
         Random random = new Random();
         int a = random.nextInt(c.size());
@@ -263,7 +267,7 @@ public class Element {
         element.sort((jobId1, jobId2) -> {
             int load1 = getJobLoad(jobId1);
             int load2 = getJobLoad(jobId2);
-            return Integer.compare(load2, load1); // sortare descrescatoare dupa load
+            return Integer.compare(load2, load1);
         });
     }
 
@@ -272,7 +276,7 @@ public class Element {
         element.sort((jobId1, jobId2) -> {
             int tasksCount1 = getJobTasksCount(jobId1);
             int tasksCount2 = getJobTasksCount(jobId2);
-            return Integer.compare(tasksCount2, tasksCount1); // sortare descrescatoare dupa taskuri
+            return Integer.compare(tasksCount2, tasksCount1);
         });
     }
 
@@ -283,7 +287,7 @@ public class Element {
             int config2 = element.get(element.indexOf(jobId2) );
             int processingTime1 = getProcessingTime(jobId1, config1);
             int processingTime2 = getProcessingTime(jobId2, config2);
-            return Integer.compare(processingTime1, processingTime2); // sortare crescatoare dupa timpul de procesare
+            return Integer.compare(processingTime1, processingTime2);
         });
     }
 
@@ -312,7 +316,7 @@ public class Element {
         element.sort((jobId1, jobId2) -> {
             int tasksCount1 = getMachineTasksCount(jobId1);
             int tasksCount2 = getMachineTasksCount(jobId2);
-            return Integer.compare(tasksCount2, tasksCount1); // sortare descrescatoare după numarul de taskuri ale masinii
+            return Integer.compare(tasksCount2, tasksCount1);
         });
     }
 
@@ -329,6 +333,7 @@ public class Element {
         return 0;
     }
 
+    //counts the tasks for each job
     private int getJobTasksCount(int jobId) {
         for (Job job : planification.getJobs()) {
             if (job.getId() == jobId) {
@@ -353,6 +358,7 @@ public class Element {
         return 0;
     }
 
+    // gets the sum of speeds for each task machine
     private int getMachineLoad(int jobId) {
         for (Job job : planification.getJobs()) {
             if (job.getId() == jobId) {
@@ -361,7 +367,7 @@ public class Element {
                 for (Task task : tasks) {
                     Machine machine = task.getMachine();
                     if (machine != null) {
-                        totalLoad += machine.getSpeed() * machine.getEnergyConsumption();
+                        totalLoad += machine.getSpeed() ;
                     }
                 }
                 return totalLoad;
@@ -370,6 +376,7 @@ public class Element {
         return 0;
     }
 
+    //gets the total of tasks for each machine
     private int getMachineTasksCount(int jobId) {
         for (Job job : planification.getJobs()) {
             if (job.getId() == jobId) {

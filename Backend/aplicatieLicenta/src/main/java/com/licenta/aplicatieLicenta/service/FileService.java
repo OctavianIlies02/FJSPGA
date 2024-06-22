@@ -50,6 +50,8 @@ public class FileService {
 
             logger.setLevel(Level.ALL);
 
+            //takes the data form the file and trims it to be readable
+            // the data is then stored in variables for each specific data type
             while ((line = br.readLine()) != null) {
                 if (line.startsWith("nbJobs")) {
                     nbJobs = Integer.parseInt(line.split("=")[1].trim().replace(";", ""));
@@ -88,6 +90,7 @@ public class FileService {
                 }
             }
 
+            // for saving the data
             saveJobs(nbJobs);
             saveMachines(nbMchs);
             saveTasks(ops, nbJobs);
@@ -98,6 +101,7 @@ public class FileService {
         }
     }
 
+    //saves jobs into the database and adds id s to each job
     private void saveJobs(int nbJobs) {
         for (int i = 1; i <= nbJobs; i++) {
             Job job = new Job();
@@ -107,6 +111,7 @@ public class FileService {
         }
     }
 
+    //saves machines into the database and adds id s to each machine
     private void saveMachines(int nbMchs) {
         for (int i = 0; i < nbMchs; i++) {
             Machine machine = new Machine();
@@ -116,6 +121,10 @@ public class FileService {
         }
     }
 
+    //saves tasks
+    // it gets the list ops and then stores into task id the first number of the pair provided in the list
+    // and in machineaId the second number
+    // then creates the task and adds to the task the specified machine id and job id
     private void saveTasks(List<List<Integer>> ops, int nbJobs) {
         int taskCounter = 0;
         int jobId = 1;
@@ -142,6 +151,9 @@ public class FileService {
     }
 
 
+    //gets a list and stores the touple in task id, energy and processing time
+    // then uses those variables to create new energyProcessingTime objects and sets
+    // the values using the variables from above
     private void saveModes(List<List<Integer>> modes) {
         for (List<Integer> mode : modes) {
             int taskId = mode.get(0);

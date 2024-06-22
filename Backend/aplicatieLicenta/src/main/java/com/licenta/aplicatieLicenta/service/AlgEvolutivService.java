@@ -22,6 +22,8 @@ public class AlgEvolutivService {
     @Autowired
     private JobRepository jobRepository;
 
+    // runs the algorithm and then provides a map of makespan, energy and fitness
+    // to be displayed in the frontend
     public Map<String, Object> run(int n, int populationSize, int maxGenerations, double lambda) {
         List<Job> jobList = jobRepository.findAll();
         Planification planification = new Planification(jobList);

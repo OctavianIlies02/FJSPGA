@@ -59,6 +59,7 @@ public class Job {
         this.tasks = tasks;
     }
 
+    //gets the sum of processing time for each task
     public int getTotalLoad() {
         int totalLoad = 0;
         for (Task task : tasks) {

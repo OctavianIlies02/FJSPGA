@@ -32,6 +32,7 @@ public class WriteInDBService {
 
     private static final Logger logger = Logger.getLogger(WriteInDBService.class.getName());
 
+    // for putting all the data into the database
     public void generate(int nbJobs, int nbMchs, List<List<List<Integer>>> ops, List<List<Integer>> modes) {
         saveJobs(nbJobs);
         saveMachines(nbMchs);
@@ -57,7 +58,10 @@ public class WriteInDBService {
         }
     }
 
-    // Modificăm aici pentru a accepta List<List<List<Integer>>>
+    //saves tasks
+    // it gets the list ops and then stores into task id the first number of the pair provided in the list
+    // and in machineaId the second number
+    // then creates the task and adds to the task the specified machine id and job id
     private void saveTasks(List<List<List<Integer>>> ops, int nbJobs) {
         int taskCounter = 0;
         int jobId = 1;
@@ -83,7 +87,9 @@ public class WriteInDBService {
         }
     }
 
-
+    //gets a list and stores the touple in task id, energy and processing time
+    // then uses those variables to create new energyProcessingTime objects and sets
+    // the values using the variables from above
     private void saveModes(List<List<Integer>> modes) {
         for (List<Integer> mode : modes) {
             int taskId = mode.get(0);
@@ -105,7 +111,7 @@ public class WriteInDBService {
         }
     }
 
-
+    //for deleting all the data form the database starting in reverse order
     public void deleteAll() {
         energyProcessingTimeRepository.deleteAll();
         taskRepository.deleteAll();

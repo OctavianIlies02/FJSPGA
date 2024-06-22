@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 public class AlgEvolutiv {
-    private int n; // nr de taskuri
+    private int n; // number of tasks
     private Planification planification;
     private List<Element> population;
     private List<Element> tempPopulation;
@@ -28,6 +28,8 @@ public class AlgEvolutiv {
         this.tempPopulation = new ArrayList<>();
     }
 
+    //executes a genetic algorithm to optimize job scheduling by evolving a population of solutions
+    // through selection, crossover, and mutation until a stopping criterion is met.
     public void runAlgorithm() {
         int genSize = planification.getJobs().size() * n;
         initializePopulation(genSize);
@@ -64,7 +66,8 @@ public class AlgEvolutiv {
     }
 
 
-
+    // initializes the population for the genetic algorithm by creating and configuring
+    // `Element` instances with varying machine speeds and scheduling rules based on a given probability.
     private void initializePopulation(int genSize) {
         Random random = new Random();
         int speed;

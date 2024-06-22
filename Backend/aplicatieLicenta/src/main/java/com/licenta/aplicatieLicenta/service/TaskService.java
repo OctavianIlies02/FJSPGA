@@ -35,6 +35,7 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
+    //for adding a machine id and job id to a newly created task
     public Task addMachineToTask(Long taskId, Long machineId, Long jobId) {
         Optional<Machine> optionalMachine = machineRepository.findById(machineId);
         if (!optionalMachine.isPresent()) {
