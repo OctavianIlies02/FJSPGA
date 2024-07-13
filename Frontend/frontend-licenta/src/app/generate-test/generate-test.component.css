@@ -46,3 +46,34 @@ form button[type="submit"] {
 form button[type="submit"]:hover {
   background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 80%); /* Adjusted hover gradient */
 }
+
+
+/* Confirmation Message Styling */
+.message {
+  margin: 20px auto; /* Center horizontally and add top margin */
+  padding: 10px 20px; /* Padding inside the message */
+  width: 80%; /* Message width */
+  color: #fff; /* Text color */
+  background: linear-gradient(43deg, #28a745 0%, #34d058 100%); /* Green gradient for success message */
+  border-radius: 10px; /* Rounded corners */
+  text-align: center; /* Center text */
+  font-size: 18px; /* Text size */
+  font-weight: bold; /* Bold text */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: opacity 0.3s; /* Smooth transition for fade out */
+  opacity: 1; /* Initial opacity */
+  animation: fadeOut 5s ease-in-out forwards; /* Fade out animation */
+}
+
+/* Fade out animation for the message */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

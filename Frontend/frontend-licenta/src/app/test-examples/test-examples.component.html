@@ -22,7 +22,7 @@
     <h3>Algorithm Result</h3>
     <div>Makespan: {{ result.makespan }}</div>
     <div>Energy: {{ result.energy }}</div>
-    <div>Fitness: {{ result.fitness | number: '1.0-4'}}</div>
+    <div>Fitness: {{ result.fitness | number: '1.0-6'}}</div>
   </div>
 
   <div class="chart-container">
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="red-box">
+  <div *ngIf="isTableVisible" class="red-box">
     <h2>Results from Experimentations:</h2>
     <table class="dynamic-table">
       <thead>

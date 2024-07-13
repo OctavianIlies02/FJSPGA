@@ -134,7 +134,7 @@ public class FileService {
                 int taskId = op.get(0);
                 int machineId = op.get(1);
 
-                if (taskCounter == 5) {
+                if (taskCounter == 20) {
                     taskCounter = 0;
                     jobId++;
                 }

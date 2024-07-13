@@ -28,6 +28,8 @@ export class TestExamplesComponent {
   multipleResults: AlgorithmResult[] = [];
   resultsTable: { lambda: string, makespan: number, energy: number, fitness: string }[] = [];
 
+  isTableVisible: boolean = false; // to control the visibility of the table
+
   constructor(private algEvolutivService: AlgEvolutivService) { }
 
   runAlgorithm() {
@@ -56,8 +58,10 @@ export class TestExamplesComponent {
         lambda: lambdas[index].toFixed(1),
         makespan: result.makespan,
         energy: result.energy,
-        fitness: result.fitness.toFixed(4)
+        fitness: result.fitness.toFixed(6)
       }));
+
+      this.isTableVisible = true; // show table
 
       // Call method to update or create chart
       this.createLineChart();

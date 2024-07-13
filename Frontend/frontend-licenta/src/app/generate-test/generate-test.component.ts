@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FileService } from '../Services/file.service';
 import { WritesService } from '../Services/writes.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-generate-test',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './generate-test.component.html',
   styleUrl: './generate-test.component.css'
 })
@@ -16,6 +17,7 @@ export class GenerateTestComponent {
   nbMchs: number | undefined;
   ops: string | undefined;
   modes: string | undefined;
+  message: string | null = null;
 
   constructor(private fileService: FileService, private writeService: WritesService) { }
 
@@ -28,13 +30,18 @@ export class GenerateTestComponent {
       this.fileService.uploadFile(this.fileToUpload).subscribe(
         response => {
           console.log('File uploaded successfully', response);
+          this.message = 'File uploaded successfully!';
+          setTimeout(() => this.message = null, 3000); // Clears message after 5 seconds
         },
         error => {
           console.error('Error uploading file', error);
+          this.message = 'Error uploading file.';
         }
       );
     } else {
       console.error('No file selected');
+      this.message = 'No file selected';
+          setTimeout(() => this.message = null, 3000); // Clears message after 5 seconds
     }
   }
 
@@ -88,16 +95,23 @@ export class GenerateTestComponent {
         this.writeService.generateData(this.nbJobs, this.nbMchs, opsList, modesList).subscribe(
           response => {
             console.log('Success', response);
+            this.message = 'Success';
+            setTimeout(() => this.message = null, 3000); // Clears message after 5 seconds
           },
           error => {
             console.error('Error in data processing', error);
+            this.message = 'Data processed successfully!';
+            setTimeout(() => this.message = null, 3000); // Clears message after 5 seconds
           }
         );
       } catch (e) {
         console.error('Data was not sent', e);
+        this.message = 'Error parsing data.';
       }
     } else {
       console.error('Missing variables');
+      this.message = 'Missing variables';
+          setTimeout(() => this.message = null, 3000); // Clears message after 5 seconds
     }
   }
 
@@ -107,6 +121,8 @@ export class GenerateTestComponent {
     this.writeService.deleteAllData().subscribe(
       response => {
         console.log('All data deleted successfully', response);
+        this.message = 'Deleted all data';
+          setTimeout(() => this.message = null, 3000); // Clears message after 5 seconds
       },
       error => {
         console.error('Error deleting all data', error);

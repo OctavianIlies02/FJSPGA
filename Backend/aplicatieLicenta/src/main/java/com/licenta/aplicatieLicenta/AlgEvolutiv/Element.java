@@ -154,7 +154,7 @@ public class Element {
         return currentEnergy;
     }
 
-    public double getMaxMakespan() {
+   public double getMaxMakespan() {
         double makespan = 0;
        for(Job job : planification.getJobs()){
            for(Task task : job.getTasks()){
@@ -173,6 +173,9 @@ public class Element {
        }
        return makespan;
     }
+
+
+
 
     public double getMaxEnergy() {
         double energy = 0;
@@ -193,6 +196,8 @@ public class Element {
         }
         return energy;
     }
+
+
 
 
     public void crossover(List<Element> p1, List<Element> p2) {

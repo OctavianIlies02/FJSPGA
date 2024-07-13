@@ -11,13 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 public class AlgEvolutivService {
 
-    private static final Logger logger = LoggerFactory.getLogger(AlgEvolutivService.class);
 
     @Autowired
     private JobRepository jobRepository;
@@ -34,8 +31,8 @@ public class AlgEvolutivService {
         element.evaluateFitness(lambda);
 
 
-        double makespan = element.getCurrentMakespan() ;
-        double energy = element.getCurrentEnergy() ;
+        double makespan = element.getMaxMakespan() + element.getCurrentMakespan() ;
+        double energy = element.getCurrentEnergy() +element.getMaxEnergy()  ;
         double fitness = element.getFitness();
 
         return Map.of(
